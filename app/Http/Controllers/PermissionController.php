@@ -105,7 +105,8 @@ class PermissionController extends Controller
 
     public function save($request,$permission)
     {
-      $permission->name = $request->name;      
+      $permission->name = $request->name;
+      $permission->slug = Str::slug($request->name);
       $permission->save();
 
       return $permission;

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-
+Use Str;
 class PermissionSeeder extends Seeder
 {
     /**
@@ -16,10 +16,10 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            ['name'=>'create'],
-            ['name'=>'update'],
-            ['name'=>'view'],
-            ['name'=>'delete']
+            ['name'=>'create','slug'=>Str::slug('create')],
+            ['name'=>'update','slug'=>Str::slug('update')],
+            ['name'=>'view','slug'=>Str::slug('view')],
+            ['name'=>'delete','slug'=>Str::slug('delete')]
         ];
 
         DB::table('permissions')->insert($permissions);

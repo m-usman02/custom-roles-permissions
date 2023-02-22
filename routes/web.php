@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
+use App\Models\Role;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,3 +20,8 @@ Route::get('/', function () {
 });
 
 Route::post('/login',[Controllers\AuthController::class,'login'])->name('login');
+
+
+Route::group(['middleware'=>'auth'],function(){
+    Route::resource('role',Controllers\RoleController::class)->names('role');
+});

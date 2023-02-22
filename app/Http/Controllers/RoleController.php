@@ -4,10 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleRequest;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Str;
 class RoleController extends Controller
 {
+
+    public function assignRole(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'roles'  => 'required|array',
+            'roles.*'=> 'exists:roles,id'
+        ]);
+        try {
+           $user = User::find($request->user_id);
+           $user->roles()->sync($request->roles);         
+           $response = ["success"=>true,"message" => "Role Successfully Assigned !!"]; 
+        } catch (\Exception $e) {           
+            $response = ["success"=>false,"message" => "Something Went Wrong !!"];    
+        }
+        return response()->json($response);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -107,8 +125,7 @@ class RoleController extends Controller
 
     public function save($request,$role)
     {
-      $role->name = $request->name;
-      $role->slug = Str::slug($request->name);
+      $role->name = $request->name;    
       $role->save();
 
       return $role;

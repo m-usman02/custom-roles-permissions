@@ -23,6 +23,7 @@ Route::post('/login',[Controllers\AuthController::class,'login'])->name('login')
 
 
 Route::group(['middleware'=>'auth'],function(){
+    Route::post('assign-role',[Controllers\RoleController::class,'assignRole'])->name('assign_role');
     Route::resource('role',Controllers\RoleController::class)->names('role');
     Route::resource('permission',Controllers\PermissionController::class)->names('permission');
 });

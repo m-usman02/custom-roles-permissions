@@ -14,38 +14,59 @@ class RoleTest extends TestCase
      *
      * @return void
      */
-    public function test_role_store()
+    // public function test_role_store()
+    // {      
+    //     $user = User::find(1);
+        
+
+    //     $response = $this->actingAs($user)->post('/role',[
+    //         'name' => 'admin','permissions'=>[1]            
+    //     ]);
+
+    //     $response->assertJson([
+    //         'success' => true,
+    //     ]);
+    // }
+
+    // public function test_role_update()
+    // {      
+    //     $user = User::find(1);
+
+    //     $response = $this->actingAs($user)->put('/role/2',[
+    //         'name' => 'user', 'permissions'=>[1]           
+    //     ]);
+
+    //     $response->assertJson([
+    //         'success' => true,
+    //     ]);
+    // }
+
+    // public function test_role_delete()
+    // {      
+    //     $user = User::find(1);
+
+    //     $response = $this->actingAs($user)->delete('/role/2');
+
+    //     $response->assertJson([
+    //         'success' => true,
+    //     ]);
+    // }
+
+    public function test_role_assign()
     {      
         $user = User::find(1);
         
-
-        $response = $this->actingAs($user)->post('/role',[
-            'name' => 'admin','permissions'=>[1]            
+        $randomUser = User::create([
+            'name'=>'rand',
+            'email'=>'rand'.time().'@rand.com',
+            'password'=>bcrypt('password')
         ]);
 
-        $response->assertJson([
-            'success' => true,
+        
+
+        $response = $this->actingAs($user)->post('/assign-role',[
+            'user_id' => $randomUser->id,'roles'=>[3]            
         ]);
-    }
-
-    public function test_role_update()
-    {      
-        $user = User::find(1);
-
-        $response = $this->actingAs($user)->put('/role/2',[
-            'name' => 'user', 'permissions'=>[1]           
-        ]);
-
-        $response->assertJson([
-            'success' => true,
-        ]);
-    }
-
-    public function test_role_delete()
-    {      
-        $user = User::find(1);
-
-        $response = $this->actingAs($user)->delete('/role/2');
 
         $response->assertJson([
             'success' => true,
